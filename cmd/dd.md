@@ -1,0 +1,1 @@
+`dd`用来从标准输入(文件)读取内容，进行转化，输出到标准输出(文件), 参考[dd](https://www.runoob.com/linux/linux-comm-dd.html)
