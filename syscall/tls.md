@@ -58,9 +58,6 @@ settls 函数的调用是发生在 `src/runtime/asm_amd64.s`中. go 中是如何
 ```s
     MOVQ TLS, BX
 ```
-TLS 在 plan9 汇编中是一个虚拟寄存器,其底层对应的就是 fs 段寄存器,上述指令等价于 
-```s
-    MOVQ FS:0, BX
-```
+TLS 在 plan9 汇编中是一个虚拟寄存器,其底层对应的就是 fs 段寄存器,上述指令将 fs 对应的段基地址存储到 BX 中.
 
 那么 go 在线程的 tls 中存储了什么数据呢?当前协程 g 的地址. 我们在 go runtime 中经常看到的函数 `getg()` 就是通过 tls 来获取当前 goroutine 的地址.
