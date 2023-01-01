@@ -17,7 +17,7 @@
    - 替代 head/tail，展示指定范围的行
     结合 `-n` 和 操作 `p`，来展示特定的行。eg: `sed -n '10,20p'`。展示第10 - 第20 行。
    - 文本替换
-    可以使用 `s/old/new/g` 的方式来替换指定内容。**在 sed 中，我们可以使用任何符号(除了\\和\n)来替换\\作为分隔符， 对于内容中出现的分隔符，需要使用\\转义**。比如，我们也可以使用`s,old,new,g`。
+    可以使用 `s/old/new/g` 的方式来替换指定内容。**在 sed 中，我们可以使用任何符号(除了\\和\n)来替换\\作为分隔符， 对于内容中出现的分隔符，需要使用\\转义**。比如，我们也可以使用`s,old,new,g`。可以参考[using different delimeters in sed](https://stackoverflow.com/questions/5864146/using-different-delimiters-in-sed-commands-and-range-addresses)
    - 文件修改
     结合 `-i`选项，可以直接修改文件内容。eg:
     `sed -i 's/handle/handler/g' file`
