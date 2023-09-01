@@ -86,7 +86,7 @@ futex 是 `fast userspace mutual exclusion` 的简称.是一种用户态结合�
     bu.waiters++;
     add_task();
 
-    这会导致 wait 线程永远阻塞. 通过调整 wait 中 bu.waiters++ 的位置,可以解决次问题.
+    这会导致 wait 线程永远阻塞. 通过调整 wait 中 bu.waiters++ 的位置,可以解决此问题.
   - 版本三:
     - futex_wake
         同版本二
@@ -127,7 +127,7 @@ futex 是 `fast userspace mutual exclusion` 的简称.是一种用户态结合�
     r[y]                        r[x]
     ```
     没有加屏障的话,上面就可能会出现 r[y] = 0 && r[x] == 0 的情况.
-    要解决此问题,我们需要加入屏障保证修改数据后的全局可见性(其他 cpu 可以理解看到变量的更改.).
+    要解决此问题,我们需要加入屏障保证修改数据后的全局可见性(其他 cpu 可以立即看到变量的更改.).
     ```c
     x = y = 0;
 

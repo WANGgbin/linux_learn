@@ -25,7 +25,7 @@ static void read_data_cpu1(void)
 }
 ```
 假如 flag 已经缓存到 cpu0 的 cache 中了，在执行 `data = value` 的时候，结果写入到 store buffer 中，接着执行`flag = 1` 的时候，flag 更新到 cache 中了。这导致的结果是其他 cpu 只能看到 flag 的值，只有到 data 写入到 cpu0 的cache 后，其他 cpu 才可以看到 data 的值。
-接着 cpu1 读到 `flag = 1` 跳出循环，然后读取 data 的值，此时读到的 data 是空的，此时站在 cpu1 的角度看， cpu0 中两条语句的执行似乎是乱序的，先执行了 flag = 1，时机并非如此。
+接着 cpu1 读到 `flag = 1` 跳出循环，然后读取 data 的值，此时读到的 data 是空的，此时站在 cpu1 的角度看， cpu0 中两条语句的执行似乎是乱序的，先执行了 flag = 1，实际并非如此。
 那么如何解决呢？使用写屏障。linux 内核中提供了 `smp_wmb()` 对不同架构的屏障指令进行了封装，有些平台是`wfence`汇编指令。写屏障保证了，data = value 写内存一定在 flag = 1 之前，从而解决了乱序的问题。那么`wfence` 又是如何解决乱序的呢？这其实属于硬件层面的内容，我们不应该太过关注，作为软件工程师，可以把乱序当做一个黑盒，明白存在乱序的问题以及知道如何解决乱序的问题即可。
 
 除了`store-store乱序`还有[load-load乱序](https://zhuanlan.zhihu.com/p/155966754)、[store-load乱序](https://zhuanlan.zhihu.com/p/141655129)
